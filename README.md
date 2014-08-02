@@ -1,1 +1,1 @@
-A simple C python extension built with autotools. 
+Embedding python in a C program. 
