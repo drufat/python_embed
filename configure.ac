@@ -13,12 +13,13 @@ AC_PROG_CC
 # Python checks
 AM_PATH_PYTHON(3)
 PYTHON_INC=`$PYTHON -c "import distutils.sysconfig as s; print(s.get_python_inc())"`
-PYTHON_CFLAGS="-I$PYTHON_INC"
-PYTHON_LIBRARY=`$PYTHON -c "import distutils.sysconfig as S; import os.path as P; a=S.get_config_var('LIBPL'); b=S.get_config_var('LIBRARY'); p=P.join(a,b); print(p)"`
+PYTHON_CFLAGS=`${PYTHON}-config --cflags`
+PYTHON_LDFLAGS=`${PYTHON}-config --ldflags`
+#PYTHON_LIBRARY=`$PYTHON -c "import distutils.sysconfig as S; import os.path as P; a=S.get_config_var('LIBPL'); b=S.get_config_var('LIBRARY'); p=P.join(a,b); print(p)"`
 
 AC_SUBST([PYTHON_INC])
 AC_SUBST([PYTHON_CFLAGS])
-AC_SUBST([PYTHON_LIBRARY])
+AC_SUBST([PYTHON_LDFLAGS])
 
 AC_CONFIG_FILES([Makefile .includes])
 AC_OUTPUT
