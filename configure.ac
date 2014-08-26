@@ -10,6 +10,9 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_LIBTOOL
 AC_PROG_CC
 
+# Make the compilation flags quiet unless V=1 is used
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
 # Python checks
 AM_PATH_PYTHON(3)
 PYTHON_INC=`$PYTHON -c "import distutils.sysconfig as s; print(s.get_python_inc())"`
