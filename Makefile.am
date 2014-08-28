@@ -14,3 +14,8 @@ bin_PROGRAMS += example3
 example3_SOURCES = example3.c
 example3_CFLAGS = $(PYTHON_CFLAGS)
 example3_LDADD = $(PYTHON_LDFLAGS)
+
+bin_PROGRAMS += example4
+example4_SOURCES = example4.c
+example4_CFLAGS = $(PYTHON_CFLAGS)
+example4_LDADD = $(PYTHON_LDFLAGS)

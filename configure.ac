@@ -11,14 +11,13 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 
 # Make the compilation flags quiet unless V=1 is used
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+#m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 # Python checks
 AM_PATH_PYTHON(3)
-PYTHON_INC=`$PYTHON -c "import distutils.sysconfig as s; print(s.get_python_inc())"`
-PYTHON_CFLAGS=`${PYTHON}-config --cflags`
-PYTHON_LDFLAGS=`${PYTHON}-config --ldflags`
-#PYTHON_LIBRARY=`$PYTHON -c "import distutils.sysconfig as S; import os.path as P; a=S.get_config_var('LIBPL'); b=S.get_config_var('LIBRARY'); p=P.join(a,b); print(p)"`
+PYTHON_INC=`     PYTHONPATH=. ${PYTHON} -c "import pythonconfig as p; p.include()" `
+PYTHON_CFLAGS=`  PYTHONPATH=. ${PYTHON} -c "import pythonconfig as p; p.cflags()" `
+PYTHON_LDFLAGS=` PYTHONPATH=. ${PYTHON} -c "import pythonconfig as p; p.ldflags()"`
 
 AC_SUBST([PYTHON_INC])
 AC_SUBST([PYTHON_CFLAGS])
