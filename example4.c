@@ -1,5 +1,7 @@
 #include <Python.h>
 
+extern int Py_NoSiteFlag;
+
 int
 main(int argc, char *argv[])
 {
