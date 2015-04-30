@@ -2,6 +2,5 @@
 autoreconf -f -i
 ./configure
 make
-
 ./example1
-nm example1
+./example4
