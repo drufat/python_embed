@@ -13,3 +13,7 @@ python:
 
 script: 
     - ./try.sh
+
+notifications:
+  email: false
+
