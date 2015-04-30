@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
-
 import sys
 import sysconfig
+import distutils.sysconfig
 
 pyver = sysconfig.get_config_var('VERSION')
 getvar = sysconfig.get_config_var
 
 def include():
-    print(sysconfig.get_path('include'))
-
+    print(distutils.sysconfig.get_python_inc())
 
 def cflags():
-    flags = ['-I' + sysconfig.get_path('include'), '-I' + sysconfig.get_path('platinclude')]
-    flags.extend(getvar('CFLAGS').split())
-    print(' '.join(flags))
+    print('-I' + distutils.sysconfig.get_python_inc())
 
 def ldflags():
     libs = getvar('LIBS').split() + getvar('SYSLIBS').split()
