@@ -3,9 +3,6 @@ AC_INIT([EmbedPython], [0.1])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AM_SILENT_RULES([yes])
 AM_PROG_AR
-#AC_CONFIG_MACRO_DIR([m4])
-#AC_CONFIG_SRCDIR([example1.c])
-#AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_LIBTOOL

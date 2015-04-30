@@ -1,4 +1,3 @@
-ACLOCAL_AMFLAGS = -I m4
 
 bin_PROGRAMS = example1
 example1_SOURCES = example1.c
