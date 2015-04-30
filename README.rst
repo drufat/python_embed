@@ -11,7 +11,6 @@ To build run: ::
     $ PYTHON=/usr/bin/python ./configure
     $ make
 
-
-.. |Build Status| image:: https://travis-ci.org/drufat/python_embedding.png
-   :target: https://travis-ci.org/drufat/python_embedding
+.. |Build Status| image:: https://travis-ci.org/drufat/python_embed.png
+   :target: https://travis-ci.org/drufat/python_embed
 
