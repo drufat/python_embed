@@ -13,7 +13,7 @@ AM_PATH_PYTHON()
 AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
 PYTHON_INC=`    PYTHONPATH=. ${PYTHON} -c "import pythonconfig as p; p.include()"`
 PYTHON_CFLAGS=` PYTHONPATH=. ${PYTHON} -c "import pythonconfig as p; p.cflags()" `
-PYTHON_LDFLAGS=`PYTHONPATH=. ${PYTHON} -c "import pythonconfig as p; p.ldflags()"`
+PYTHON_LDFLAGS=`python-config --ldflags`
 
 AC_SUBST([PYTHON_INC])
 AC_SUBST([PYTHON_CFLAGS])
