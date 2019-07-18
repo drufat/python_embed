@@ -6,7 +6,7 @@ import ctypes as ct
 
 @ct.CFUNCTYPE(ct.c_int, ct.c_int)
 def func(a):
-    print(f'PY: Got from C {a}')
+    print('PY: Got from C', a)
     return a * 2
 
 callback = ct.cast(%p, ct.CFUNCTYPE(None, ct.CFUNCTYPE(ct.c_int, ct.c_int)))

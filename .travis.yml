@@ -1,18 +1,19 @@
 language: python
 
-os:
-    - linux
-    - osx
-
 python:
     - "2.7"
     - "3.6"
     - "3.7"
 
 script: 
+    - python-config --ldflags
+    - python-config --libs
+    - python -m sysconfig | grep LIBDIR
+    - ldd `which python`
     - autoreconf -f -i
     - ./configure
     - make
+    - ldd example1
     - ./run.sh
 
 notifications:

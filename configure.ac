@@ -1,4 +1,5 @@
 AC_INIT([EmbedPython], [0.1])
+AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AM_PROG_AR
 
@@ -7,16 +8,16 @@ AC_PROG_LIBTOOL
 AC_PROG_CXX
 AC_PROG_CC
 
-# Checks for C++11.
-AX_CHECK_COMPILE_FLAG([-std=c++11], [CXXFLAGS="$CXXFLAGS -std=c++11"])
-
 # Check for Python.
-AM_PATH_PYTHON(,, [:])
-AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
-PYTHON_CFLAGS=`python-config --cflags`
-PYTHON_LDFLAGS=`python-config --ldflags`
-AC_SUBST([PYTHON_CFLAGS])
-AC_SUBST([PYTHON_LDFLAGS])
+echo "checking for python: $(python --version)"
+CXXFLAGS="$(python-config --cflags) -std=c++11"
+LDFLAGS="$(python-config --ldflags)"
+echo "CXXFLAGS: $CXXFLAGS"
+echo "LDFLAGS: $LDFLAGS"
+LIBDIR="$(python -c 'import sysconfig as s; print(s.get_config_var("LIBDIR"))')"
+echo "LIBDIR: $LIBDIR"
+LDFLAGS="-L$LIBDIR $LDFLAGS"
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+
