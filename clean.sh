@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 make clean
 rm -rf Makefile Makefile.in \
         *.m4 m4 \

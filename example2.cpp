@@ -1,62 +1,43 @@
 #include <Python.h>
 #include <iostream>
 
-int main(int argc, char *argv[]) {
+static const char *source = R"(
 
-  if (argc < 3) {
-    std::cerr << "Usage: call pythonfile funcname [args]" << std::endl;
-    return 1;
-  }
+def multiply(a, b):
+    print("PY: Will compute", a, "times", b)
+    c = 0
+    for _ in range(0, a):
+        c = c + b
+    return c
+
+)";
+
+void print(PyObject *obj) { PyObject_Print(obj, stdout, Py_PRINT_RAW); }
+
+int main() {
 
   Py_Initialize();
 
-  auto name = PyUnicode_FromString(argv[1]);
-  /* Error checking of pName left out */
-  auto module = PyImport_Import(name);
+  auto globals = PyDict_New();
+  auto locals = PyDict_New();
 
-  if (!module) {
-    PyErr_Print();
-    std::cerr << "Failed to load " << argv[1] << std::endl;
-    Py_Finalize();
-    return 1;
-  }
+  PyDict_SetItemString(globals, "__builtins__", PyEval_GetBuiltins());
 
-  auto func = PyObject_GetAttrString(module, argv[2]);
-  if (!func) {
-    PyErr_Print();
-    std::cerr << "Cannot find function " << argv[2] << std::endl;
-    Py_Finalize();
-    return 1;
-  }
+  auto result = PyRun_String(source, Py_file_input, globals, locals);
+  Py_DecRef(globals);
+  Py_DecRef(result);
 
-  if (!PyCallable_Check(func)) {
-    std::cerr << "Object " << argv[2] << " not callable" << std::endl;
-    Py_Finalize();
-    return 1;
-  }
+  auto func = PyDict_GetItemString(locals, "multiply");
+  Py_IncRef(func);
+  Py_DecRef(locals);
 
-  auto n = argc - 3;
-  auto args = PyTuple_New(n);
-  for (int i = 0; i < n; ++i) {
-    auto value = PyLong_FromLong(atoi(argv[i + 3]));
-    if (!value) {
-      PyErr_Print();
-      std::cerr << "Cannot convert argument" << std::endl;
-      Py_Finalize();
-      return 1;
-    }
-    PyTuple_SetItem(args, i, value);
-  }
-
-  auto result = PyObject_CallObject(func, args);
-  if (!result) {
-    PyErr_Print();
-    std::cerr << "Call failed" << std::endl;
-    Py_Finalize();
-    return 1;
-  }
+  auto args = Py_BuildValue("ii", 2, 3);
+  result = PyObject_CallObject(func, args);
+  Py_DecRef(func);
+  Py_DecRef(args);
 
   std::cout << "CC: Result of call: " << PyLong_AsLong(result) << std::endl;
+  Py_DecRef(result);
 
   Py_Finalize();
   return 0;
